@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
+import 'package:meals/widgets/meal_item.dart';
 
 class MealsScreen extends StatelessWidget {
   const MealsScreen({required this.title, required this.meals, super.key});
@@ -34,7 +35,8 @@ class MealsScreen extends StatelessWidget {
       content = ListView.builder(
         // creates a scrollable listView and makes sure that only items that are actually visible will be displayed
         itemCount: meals.length, // with this line flutter renders the list view correctly
-        itemBuilder: (ctx, index) => Text(meals[index].title));
+        itemBuilder: (ctx, index) => MealItem(meal: meals[index]) // meals[index] gives a single meal that is passed as value to the meal parameter on the MealItem class
+        );
     }
 
     return Scaffold(

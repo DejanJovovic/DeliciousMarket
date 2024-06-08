@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:meals/data/dummy_data.dart';
+import 'package:meals/models/category.dart';
 import 'package:meals/screens/meals.dart';
 import 'package:meals/widgets/category_grid.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
 
-  void _selectCategory(BuildContext context) {
+  void _selectCategory(BuildContext context, Category category) {
+
+    // filter this dummyMeals list, returns a new itterable, that only contains items that match a certain condition
+    final filteredMeals = dummyMeals.where((meal) => meal.categories.contains(category.id)).toList(); // reach out to meal.categories and check if it contains category.id of the category that was selected here
+
     // with pop we remove a screen, with push we move to a new screen
     // Navigator.push(context, route); - alternative to this below
     // MaterialPageRoute gives us a 'route'
@@ -14,8 +19,8 @@ class CategoriesScreen extends StatelessWidget {
       MaterialPageRoute(
         // navigating(moving) to a screen with push
         builder: (ctx) => MealsScreen(
-          title: 'Some title',
-          meals: [],
+          title: category.title,
+          meals: filteredMeals,
         ),
       ),
     );
@@ -43,7 +48,7 @@ class CategoriesScreen extends StatelessWidget {
             CategoryGridItem(
               category: category,
               onSelectCategory: () {
-                _selectCategory(context);
+                _selectCategory(context, category);
               })
         ],
       ),
