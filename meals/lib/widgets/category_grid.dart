@@ -3,16 +3,21 @@ import 'package:flutter/material.dart';
 import '../models/category.dart';
 
 class CategoryGridItem extends StatelessWidget {
-  const CategoryGridItem({required this.category, super.key});
+  const CategoryGridItem({
+    required this.category, 
+    required this.onSelectCategory,
+    super.key
+    });
 
   final Category category;
+  final void Function() onSelectCategory;
 
   @override
   Widget build(BuildContext context) {
     // GestureDetector does the same thing, but it doesnt give visual feedback when the user clicks on the item
     // with InkWell you get that visual feedback
     return InkWell( // wraping the container with this InkWell widget to make it tappable
-      onTap: () {} , // set up a function that is triggered every time is this item is tapped
+      onTap: onSelectCategory , // set up a function that is triggered every time is this item is tapped
       splashColor: Theme.of(context).primaryColor, // base for this effect
       borderRadius: BorderRadius.circular(16), // allows to define a radius to give items a rounded courners,
       child: Container(
