@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
+import 'package:meals/widgets/meal_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 // outputing meal item data in that list of meals
 class MealItem extends StatelessWidget {
-  const MealItem({required this.meal, super.key});
+  const MealItem({required this.meal, required this.onSelectMeal, super.key});
 
   final Meal meal;
+
+  final void Function(Meal meal) onSelectMeal;
+
+  String get complexityText {
+    // substring returns a part of a string
+    return meal.complexity.name[0].toUpperCase() +
+        meal.complexity.name
+            .substring(1); // accesses the first item from the list
+  }
+
+  String get affordabilityText {
+    // substring returns a part of a string
+    return meal.affordability.name[0].toUpperCase() +
+        meal.affordability.name
+            .substring(1); // accesses the first item from the list
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +38,9 @@ class MealItem extends StatelessWidget {
       elevation: 2, // gives 3d effect
       child: InkWell(
         // using InkWell here also because meals should also be tappable
-        onTap: () {},
+        onTap: () {
+          onSelectMeal(meal);
+        },
         child: Stack(
           // widget that can be used to position multiple widgets above each other, for example set an image for a background and have some text on top of it
           children: [
@@ -72,7 +91,24 @@ class MealItem extends StatelessWidget {
                     const SizedBox(
                         height: 12), // to add some spacing between rows
                     Row(
-                      children: [],
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        MealItemTrait(
+                            icon: Icons.schedule,
+                            // can be done with toString too
+                            label: '${meal.duration} min' // injection
+                            ),
+                        const SizedBox(width: 12),
+                        MealItemTrait(
+                          icon: Icons.work,
+                          label: complexityText,
+                        ),
+                        const SizedBox(width: 12),
+                        MealItemTrait(
+                          icon: Icons.attach_money,
+                          label: affordabilityText,
+                        ),
+                      ],
                     )
                   ],
                 ),
