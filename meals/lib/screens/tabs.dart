@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/screens/categories.dart';
 import 'package:meals/screens/meals.dart';
+import 'package:meals/widgets/main_drawer.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -52,6 +53,14 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
+  void _setScreen(String identifier){
+    if(identifier == 'filters'){
+      // go to filters screen
+    } else {
+      Navigator.of(context).pop(); // close the drawer
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget activePage = CategoriesScreen(
@@ -71,6 +80,9 @@ class _TabsScreenState extends State<TabsScreen> {
       appBar: AppBar(
         title: Text(activePageTitle),
       ),
+      drawer: MainDrawer(
+        onSelectScreen: _setScreen,
+      ), // this adds the navigation drawer on the home screen
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
