@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/screens/categories.dart';
+import 'package:meals/screens/filters.dart';
 import 'package:meals/screens/meals.dart';
 import 'package:meals/widgets/main_drawer.dart';
 
@@ -17,15 +18,13 @@ class _TabsScreenState extends State<TabsScreen> {
   int _selectedPageIndex = 0;
   final List<Meal> _favoriteMeals = [];
 
-  void _showInfoMessage(String message){
+  void _showInfoMessage(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        ),
+      ),
     );
-
-
   }
 
   void _toggleMealFavoriteStatus(Meal meal) {
@@ -53,12 +52,18 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
-  void _setScreen(String identifier){
-    if(identifier == 'filters'){
-      // go to filters screen
-    } else {
-      Navigator.of(context).pop(); // close the drawer
-    }
+  void _setScreen(String identifier) {
+
+    Navigator.of(context).pop(); // close the drawer
+    if (identifier == 'filters') {
+      Navigator.of(context).push(  // pushReplacement(instead of push) - makes sure that the current screen will be replaced by the FilteredScreen, and then the back button would not work because there is no place to go back to
+        MaterialPageRoute(
+        builder: (ctx) => const FiltersScreen(
+        ),
+      ));
+    } /* else {
+      Navigator.of(context).pop(); 
+    } */ // we dont need the else statement because its called at the start
   }
 
   @override
