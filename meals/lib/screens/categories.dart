@@ -8,9 +8,10 @@ class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
 
   void _selectCategory(BuildContext context, Category category) {
-
     // filter this dummyMeals list, returns a new itterable, that only contains items that match a certain condition
-    final filteredMeals = dummyMeals.where((meal) => meal.categories.contains(category.id)).toList(); // reach out to meal.categories and check if it contains category.id of the category that was selected here
+    final filteredMeals = dummyMeals
+        .where((meal) => meal.categories.contains(category.id))
+        .toList(); // reach out to meal.categories and check if it contains category.id of the category that was selected here
 
     // with pop we remove a screen, with push we move to a new screen
     // Navigator.push(context, route); - alternative to this below
@@ -28,30 +29,25 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pick your category'),
+    return GridView(
+      // rendering a grid of items
+      padding: const EdgeInsets.all(24),
+      // gridDelegate - controls the layout of the grid items
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2, // two columns next to each other
+        childAspectRatio: 3 / 2,
+        crossAxisSpacing: 20, // spacing between columns
+        mainAxisSpacing: 20, // spacing horizontally and vertically
       ),
-      body: GridView(
-        // rendering a grid of items
-        padding: const EdgeInsets.all(24),
-        // gridDelegate - controls the layout of the grid items
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // two columns next to each other
-          childAspectRatio: 3 / 2,
-          crossAxisSpacing: 20, // spacing between columns
-          mainAxisSpacing: 20, // spacing horizontally and vertically
-        ),
-        children: [
-          // alternative to using availableCategories.map((category) => CategoryGridItem(category: category)).toList()
-          for (final category in availableCategories)
-            CategoryGridItem(
+      children: [
+        // alternative to using availableCategories.map((category) => CategoryGridItem(category: category)).toList()
+        for (final category in availableCategories)
+          CategoryGridItem(
               category: category,
               onSelectCategory: () {
                 _selectCategory(context, category);
               })
-        ],
-      ),
+      ],
     );
   }
 }
