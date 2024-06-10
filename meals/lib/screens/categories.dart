@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:meals/data/dummy_data.dart';
 import 'package:meals/models/category.dart';
+import 'package:meals/models/meal.dart';
 import 'package:meals/screens/meals.dart';
 import 'package:meals/widgets/category_grid.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({super.key});
+  const CategoriesScreen({
+    required this.onToggleFavorite,
+    super.key
+    });
+
+  final void Function(Meal meal) onToggleFavorite;
+
 
   void _selectCategory(BuildContext context, Category category) {
     // filter this dummyMeals list, returns a new itterable, that only contains items that match a certain condition
@@ -22,6 +29,7 @@ class CategoriesScreen extends StatelessWidget {
         builder: (ctx) => MealsScreen(
           title: category.title,
           meals: filteredMeals,
+          onToggleFavorite: onToggleFavorite,
         ),
       ),
     );
