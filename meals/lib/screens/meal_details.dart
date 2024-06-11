@@ -62,12 +62,15 @@ class MealDetailsScreen extends ConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.network(
-              // image.network loads spaces from web and loads it in the app
-              meal.imageUrl,
-              height: 300,
-              width: double.infinity,
-              fit: BoxFit.cover,
+            Hero( // hero widget also added here to form a connection between this file and meal_item.dart
+              tag: meal.id,
+              child: Image.network(
+                // image.network loads spaces from web and loads it in the app
+                meal.imageUrl,
+                height: 300,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(height: 14),
             Text(

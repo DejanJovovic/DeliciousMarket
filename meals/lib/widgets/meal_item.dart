@@ -44,18 +44,21 @@ class MealItem extends StatelessWidget {
         child: Stack(
           // widget that can be used to position multiple widgets above each other, for example set an image for a background and have some text on top of it
           children: [
-            FadeInImage(
-              // utility widget that displays an image that's being faded in, when its loading its not poping in but fading in
-              placeholder: MemoryImage(// knows how to load images from memory
-                  kTransparentImage // contains memory image that is loaded as a placeholder
-                  ),
-              image: NetworkImage(// image fetched from the internet
-                  meal.imageUrl),
-              fit: BoxFit
-                  .cover, // makes sure that the image is never distored, instead is cut off and zoomed on a bit if it wouldnt fit into the box otherwise
-              height: 200,
-              width: double
-                  .infinity, // tell the image to use as much space as it needs horizontally
+            Hero( // this exists to animate widgets across different widgets/across different screens
+              tag: meal.id,
+              child: FadeInImage(
+                // utility widget that displays an image that's being faded in, when its loading its not poping in but fading in
+                placeholder: MemoryImage(// knows how to load images from memory
+                    kTransparentImage // contains memory image that is loaded as a placeholder
+                    ),
+                image: NetworkImage(// image fetched from the internet
+                    meal.imageUrl),
+                fit: BoxFit
+                    .cover, // makes sure that the image is never distored, instead is cut off and zoomed on a bit if it wouldnt fit into the box otherwise
+                height: 200,
+                width: double
+                    .infinity, // tell the image to use as much space as it needs horizontally
+              ),
             ),
             // widget that displays a name of the meals as well as the meta information of the meal
             Positioned(
