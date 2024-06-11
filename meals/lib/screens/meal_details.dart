@@ -16,10 +16,9 @@ class MealDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final favoriteMeals = ref.watch(favoriteMealsProvider);
 
-    final isFavorite = favoriteMeals.contains(meal); 
+    final isFavorite = favoriteMeals.contains(meal);
 
     // WidgetRef is now needed when the ConsumerWidget is used
     return Scaffold(
@@ -36,11 +35,27 @@ class MealDetailsScreen extends ConsumerWidget {
               ScaffoldMessenger.of(context).clearSnackBars();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(wasAdded ? 'Meal added as a favorite.' : 'Meal removed.'),
+                  content: Text(
+                      wasAdded ? 'Meal added as a favorite.' : 'Meal removed.'),
                 ),
               );
             },
-            icon: Icon( isFavorite? Icons.star : Icons.star_border), // changes favorite icon when its clicked
+            // allows to animate the transition from one widget to another
+            icon: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              transitionBuilder: (child, animation) {
+                return RotationTransition(
+                  turns: Tween( // gives more controls over between which values i want to animate
+                    begin: 0.8,
+                    end: 1.0
+                  ).animate(animation), 
+                  child: child);
+              },
+              child: Icon(
+                isFavorite ? Icons.star : Icons.star_border,
+                key: ValueKey(isFavorite), // without this line the animation wont be triggered
+              ),
+            ), // changes favorite icon when its clicked
           ),
         ],
       ),
